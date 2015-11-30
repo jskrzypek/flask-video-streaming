@@ -1,64 +1,9 @@
 <html>
   <head>
     <title>Video Streaming Demonstration</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *; img-src *; connect-src *">
   </head>
   <body>
     <h1>Video Streaming Demonstration</h1>
-    <!-- <img src="{{ url_for('video_feed') }}"> -->
-    <script>
-        window.onload=function() {  
-            console.log('starting script');
-            setTimeout(function() {
-                console.log('converting frame');
-                fetch('http://10.0.0.3:8080/live.jpg', {
-                    method: 'GET',
-                    headers: {
-                         "Access-Control-Allow-Origin":"*", 
-                         "Access-Control-Allow-Credentials":"true", 
-                         "Access-Control-Allow-Headers":"Content-Type, Origin, Authorization, X-Requested-With, Accept"
-                    }//,
-                    // mode: 'no-cors'
-                })
-                .then(function(response) {
-                    return response.blob();
-                })
-                .then(function(content) {
-                    console.dir(content)    
-                    console.log('got frame', btoa(content));
-                    return btoa(content);
-                })
-                .then(function(base64Img) {
-                    console.log('uploading frame');
-                    return fetch('http://localhost:5000/upload_frame', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            content: base64Img
-                        }),
-                        mode: 'no-cors'
-                    });
-                })
-                .then(function(result) {
-                    console.log('done posting', result);
-                    .then()
-                })
-            }, 1000);
-        }
-        function convertToDataURLviaCanvas(){
-            console.log('getting frame');
-            return fetch('http://10.0.0.3:8080/live.jpg', {
-                    method: 'GET',
-                    mode: 'no-cors'
-                })
-                .then(function(response) {
-                    return response.blob();
-                })
-                .then(function(content) {
-                    console.dir(content)    
-                    console.log('got frame', btoa(content));
-                    return btoa(content);
-                });
-        }
-    </script>
+    <img src="{{ url_for('video_feed') }}">
   </body>
 </html>
